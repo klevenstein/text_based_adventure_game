@@ -1,36 +1,70 @@
 import os
 
-## START ROOMS
-def red_room():
-    print("It's a red room.")
-
-def blue_room():
-    # list of items in the treasure chest
-    treasure_chest = ["gold", "silver", "diamonds", "sword"]
-
-    # describe the scene to the player
-    print("You see a wooden treasure chest on the floor in the middle of the room. There is also a sleeping goblin guard.")
-
-    # prompt the player to take an action?
-    blue_room_action = input("Do you want to [O]pen the chest, [W]ake the guard, or [L]eave? >")
-    if blue_room_action.lower in ["open", "o"]:
-        print("The chest creaks open softly.")
-    elif blue_room_action.lower in ["wake", "w"]:
-        print("The guard sits up and blinks at you.")
-    elif blue_room_action.lower in ["leave", "l"]:
+def fight():
+    print("Your opponent attacks you with everything they have!")
+    fight_response = input("Do you [F]ight back or [R]un away?")
+    if fight_response in ["fight", "f"]:
+        print("You win!")
+        end_adventure()
+    elif fight_response in ["run", "r"]:
+        print("You get away! ... and end up where you started.")
         start_adventure()
 
+def red_room():
+    print("It's a red room.")
+    start_adventure()
 
 def yellow_room():
     print("You pass through the door ... and end up where you started.")
     start_adventure()
 
-## END ROOMS
+def blue_room():
+    treasure = ["Gold coins", "A silver cup", "A diamond ring", "A jeweled sword"]
+    
+    print("It's a blue room.")
+    print("There is a treasure chest to the right and a sleeping goblin guard to the left.")
+    blue_action = input("Do you [L]eave, [O]pen the treasure chest, or [A]ttack the guard?")
+    if blue_action in ["leave", "l"]:
+        start_adventure()
+    elif blue_action in ["open", "o"]:
+        print("You open the treasure chest.")
+        print("Inside, you see the following items:")
+        for x in treasure:
+            print(x)
+        loot = input("Will you take the [G]old, the [C]up, the [R]ing, or the [S]word?")
+        if loot in ["gold", "g"]:
+            print("The coins are shiny and smooth. You put them in your pocket and leave.")
+            start_adventure()
+        elif loot in ["cup", "c"]:
+            print("You see now that the cup is actually badly tarnished. In fact, it's only plate.")
+            print("You put it back and leave.")
+            start_adventure
+        elif loot in ["ring", "r"]:
+            print("The ring is curiously heavy for its size.")
+            print("You feel compelled to stick it in your pocket.")
+            print("You do so, and leave.")
+            start_adventure()
+        elif loot in ["sword", "s"]:
+            print("As you pick up the sword, the guard wakes up and takes a swing at you!")
+            fight()
+        else:
+            print("Don't care much for material goods, huh?")
+            blue_room()
+    elif blue_action in ["attack", "a"]:
+        print("The guard wakes up and swings a sword at you!")
+        fight()
+    else:
+        print("Come on, make a decision.")
+        blue_room()
+
+
 
 def start_adventure():
-    print("You enter a room. On your left is a red door, and on your right is a blue door. In front of you is a yellow door.")
+    print("You enter a room.")
+    print("On your left is a red door, and on your right is a blue door.") 
+    print("In front of you is a yellow door.")
     door_picked = input("Which door do you pick? [R]ed, [B]lue, or [Y]ellow] >")
-    if door_picked.lower in ["red","r"]:
+    if door_picked in ["red","r"]:
         red_room()
     elif door_picked in ["blue","b"]:
         blue_room()
@@ -39,24 +73,25 @@ def start_adventure():
     else:
         print("You can't win if you don't play the game. Bye.")
 
+def end_adventure():
+    print("\nThe end.\n Thanks for playing!")
+
 def main():
     os.system("clear")
     player_name = get_player_name()
     start_adventure()
-    print("\nThe end\n")
-#    print("Thanks for playing, {}!".format(player_name.upper()))
 
 def get_player_name():
     name = input("What's your name, player? > ")
     alt_name = "Daisy Dewdrop Fluffington"
-    answer = input("Thanks, {}. That is your name, right? [Y/N] > ".format(alt_name.upper()))
+    answer = input(f"Thanks, {alt_name}. That is your name, right? [Y/N] > ")
     if answer.lower() in ["y","yes"]:
         name = alt_name
-        print("Aha, a fellow Baldur's Gate fan. Let's go, {}!" .format(name.upper()))
+        print(f"Aha, a fellow Baldur's Gate fan. Let's go, {name}!")
     elif answer.lower() in ["n","no"]:
-        print("Okay, fine, {}. Killjoy. Let's go anyway." .format(name.upper()))
+        print("Okay, fine, {name}. Killjoy. Let's go anyway.")
     else:
-        print("Very funny, {}. Let's go.".format(alt_name.upper()))
+        print(f"Very funny, {alt_name}. Let's go.")
         name = alt_name
 
 if __name__ == '__main__':
