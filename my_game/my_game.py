@@ -19,7 +19,7 @@ def yellow_room():
     start_adventure()
 
 def blue_room():
-    treasure = ["Gold coins", "A silver cup", "A diamond ring", "A jeweled sword"]
+    import game_dict
     
     print("It's a blue room.")
     print("There is a treasure chest to the right and a sleeping goblin guard to the left.")
@@ -29,7 +29,7 @@ def blue_room():
     elif blue_action in ["open", "o"]:
         print("You open the treasure chest.")
         print("Inside, you see the following items:")
-        for x in treasure:
+        for x in game_dict.treasure:
             print(x)
         loot = input("Will you take the [G]old, the [C]up, the [R]ing, or the [S]word?")
         if loot in ["gold", "g"]:
@@ -57,23 +57,32 @@ def blue_room():
         print("Come on, make a decision.")
         blue_room()
 
-
-
 def start_adventure():
-    print("You enter a room.")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("Welcome to the Beginning Adventurer's Dungeon.\n")
+    print("You open the creaking wooden door and enter a room.")
     print("On your left is a red door, and on your right is a blue door.") 
     print("In front of you is a yellow door.")
-    door_picked = input("Which door do you pick? [R]ed, [B]lue, or [Y]ellow] >")
+    print("Behind you is the wooden door where you came in.")
+    choose_door()
+
+def choose_door():
+    door_picked = input("Which door do you pick? [R]ed, [B]lue, [Y]ellow], or [E]ntrance >")
     if door_picked in ["red","r"]:
         red_room()
     elif door_picked in ["blue","b"]:
         blue_room()
     elif door_picked in ["yellow","y"]:
         yellow_room()
+    elif door_picked in ["entrance", "e"]:
+        end_adventure()
     else:
-        print("You can't win if you don't play the game. Bye.")
+        print("Enter one of the letters in the list.")
+        choose_door()
 
 def end_adventure():
+    print("You go back out through the creaking wooden door and stand blinking in the sunlight.")
+    print("Your adventure is over, for now.")
     print("\nThe end.\n Thanks for playing!")
 
 def main():
