@@ -1,8 +1,12 @@
 treasure = {
-    'Gold coins',
-    'A silver cup',
-    'A diamond ring',
-    'A steel sword'
+    '[G]old coins',
+    'A silver [C]up',
+    'A diamond [R]ing',
+    'A steel [S]word'
+}
+
+inventory = {
+    'A flashlight'
 }
 
 treasure_list = [
