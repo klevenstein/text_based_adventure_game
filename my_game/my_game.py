@@ -178,12 +178,7 @@ def end_adventure():
 def end_adventure_dead(why):
     print(why, "\nYou have died.")
     print("The end.\nThanks for playing!")
-    exit(0)
-
-def main():
-    os.system("clear")
-    player_name = get_player_name()
-    start_adventure()
+    exit(0)   
 
 def get_player_name():
     name = input("What's your name, player? > ")
