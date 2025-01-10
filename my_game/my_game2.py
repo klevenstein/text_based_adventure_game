@@ -1,6 +1,7 @@
 from sys import exit
 from random import randint
 from dialogue import DIALOGUE
+import my_game.game_items as game_items
 
 class Scene(object):
 
@@ -62,17 +63,25 @@ class BlueRoom(Scene):
 
 class RedRoom(Scene):
     def enter(self):
-        print(DIALOGUE["RedRoom_enter"])
-        action = input("Do you [T]ake the suit or [L]eave it? > ")
-        if action in ["take", "t"]:
-            print("You put the suit of armor on. It fits perfectly.")
-            return 'entry_hall'
-        elif action in ["leave", "l"]:
-            print("You go back to the entrance room.")
+        if game_items.inventory in "armor":
+            print("There is nothing in this room")
             return 'entry_hall'
         else:
-            print("Game over.")
-            return 'death'
+            redroom_contents = ["A suit of armor"]
+            print(DIALOGUE["RedRoom_enter"])
+            action = input("Do you [T]ake the suit or [L]eave it? > ")
+            if action in ["take", "t"]:
+                redroom_contents.remove("A suit of armor")
+                game_items.inventory.add("A suit of armor")
+                print("You put the suit of armor on. It fits perfectly.")
+                return 'entry_hall'
+            elif action in ["leave", "l"]:
+                print("You go back to the entrance room.")
+                return 'entry_hall'
+            else:
+                print("Game over.")
+                return 'death'
+    
         
 class Finished(Scene):
     def enter(self):

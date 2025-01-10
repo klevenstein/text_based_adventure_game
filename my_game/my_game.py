@@ -1,5 +1,5 @@
 import os
-import game_dict
+import game_items as game_items
 
 # Status of player and setting at the beginning of the game
 
@@ -17,42 +17,42 @@ def fight():
             print("The guard knocks you down and the last thing you see is a sword descending toward your face.")
             end_adventure_dead("You have been defeated by a goblin.")
         if fight_continue in ["run", "r"]:
-            print("Discretion is the better part of valour.")
-            print("You get away! ... and end up where you started.")
+            print("Discretion is the better part of valour. \nYou get away! ... and end up where you started.")
             choose_door()
         else:
             print("Make a choice!")
             fight()
     if fight_response in ["fight", "f"] and wearing_armor == True and carrying_sword == False:
-        print("The guard's attacks bounce off your armor, but you have no way of fighting back.")
-        print("The smart thing to do now is run, and you get away.")
+        print("""
+The guard's attacks bounce off your armor, but you have no way of fighting back.
+The smart thing to do now is run, and you get away
+              """)
         choose_door()
     if fight_response in ["fight", "f"] and wearing_armor == False and carrying_sword == True:
-        print("You and the guard engage in a fierce sword fight!")
-        print("But although you have a superior sword, you have no armor.")
-        print("The guard stabs you!")
+        print("""
+You and the guard engage in a fierce sword fight!
+But although you have a superior sword, you have no armor.
+The guard stabs you!
+""")
         end_adventure_dead("You have been defeated by a goblin.")
     if fight_response in ["fight", "f"] and wearing_armor == True and carrying_sword == True:
-        print("You and the guard engage in a fierce sword fight!")
-        print("Your sword is superior and you win!")
+        print("You and the guard engage in a fierce sword fight! \nYour sword is superior and you win!")
         guard_alive = False
         blue_room()
     elif fight_response in ["run", "r"]:
-        print("The best fights are the ones you don't start.")
-        print("You get away! ... and end up where you started.")
+        print("The best fights are the ones you don't start. \nYou get away! ... and end up where you started.")
         choose_door()
 
 def treasure_chest():
     global carrying_sword
-    print("You open the treasure chest.")
-    print("Inside, you see the following items:")
-    for x in game_dict.treasure:
+    print("You open the treasure chest.\nInside, you see the following items:")
+    for x in game_items.treasure:
         print(x)
     loot = input("Which do you take? Or, you can close the chest by pressing [X]. > ")
     if loot in ["gold", "g"]:
         print("The coins are shiny and smooth. You put them in your pocket.")
-        game_dict.treasure.remove("[G]old coins")
-        game_dict.inventory.add("Gold coins")
+        game_items.treasure.remove("[G]old coins")
+        game_items.inventory.append("Gold coins")
         treasure_chest()
     elif loot in ["cup", "c"]:
         print("You see now that the cup is actually badly tarnished. In fact, it's only plate.")
@@ -62,27 +62,23 @@ def treasure_chest():
             treasure_chest()
         if loot_cup in ["take", "t"]:
             print("You take the cup anyway.")
-            game_dict.treasure.remove("A silver [C]up")
-            game_dict.inventory.add("A silver cup")
+            game_items.treasure.remove("A silver [C]up")
+            game_items.inventory.append("A silver cup")
             treasure_chest()
     elif loot in ["ring", "r"]:
-        print("The ring is curiously heavy for its size.")
-        print("You feel compelled to stick it in your pocket.")
-        print("You do so, and feel uneasy. Maybe you should put it back?")
-        game_dict.treasure.remove("A diamond [R]ing")
+        print("The ring is curiously heavy for its size. You feel compelled to stick it in your pocket. \nYou do so, and feel uneasy. Maybe you should put it back?")
+        game_items.treasure.remove("A diamond [R]ing")
         loot_ring = input("Do you [R]eturn the ring, or [K]eep it? > ")
         if loot_ring in ["return", "r"]:
             print("You put the ring back and feel better.")
-            game_dict.treasure.add("A diamond [R]ing")
+            game_items.treasure.add("A diamond [R]ing")
         if loot_ring in ["keep", "k"]:
-            print("You decide to keep the ring anyway.")
-            print("After all, why shouldn't you keep it?")
-            print("It's yours now. Your precious.")
-            game_dict.inventory.add("A diamond ring")
+            print("You decide to keep the ring anyway. \nAfter all, why shouldn't you keep it? It's yours now. Your precious.")
+            game_items.inventory.append("A diamond ring")
         treasure_chest()
     elif loot in ["sword", "s"]:
-        game_dict.treasure.remove("A steel [S]word")
-        game_dict.inventory.add("A steel sword")
+        game_items.treasure.remove("A steel [S]word")
+        game_items.inventory.append("A steel sword")
         carrying_sword = True
         print("As you pick up the sword, the guard wakes up and takes a swing at you!")
         fight()
@@ -97,11 +93,9 @@ def red_room():
         print("There is a suit of armor on a table in the middle of the room.")
         choice = input("Do you [T]ake the suit or [L]eave it? > ")
         if choice in ["take", "t"]:
-            print("You put the suit of armor on.")
-            print("It fits perfectly.")
-            print("You go back to the entrance room.")
+            print("You put the suit of armor on. It fits perfectly. \nYou go back to the entrance room.")
             wearing_armor = True
-            game_dict.inventory.add("Armor")
+            game_items.inventory.append("Armor")
             choose_door()
         elif choice in ["leave", "l"]:
             print("You go back to the entrance room.")
@@ -110,8 +104,7 @@ def red_room():
             print("Make up your mind.")
             red_room()
     if wearing_armor == True:
-        print("There is nothing in this room anymore.")
-        print("You go back to the entrance room.")
+        print("There is nothing in this room anymore. You go back to the entrance room.")
         choose_door()
 
 def yellow_room():
@@ -139,17 +132,19 @@ def blue_room():
         blue_room()
 
 def start_adventure():
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("Welcome to the Beginning Adventurer's Dungeon.\n")
-    print("You open the creaking wooden door and enter a room.")
-    print("On your left is a red door, and on your right is a blue door.") 
-    print("In front of you is a yellow door.")
-    print("Behind you is the wooden door where you came in.")
+    print("""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Welcome to the Beginning Adventurer's Dungeon.\n
+You open the creaking wooden door and enter a room.
+On your left is a red door, and on your right is a blue door.
+In front of you is a yellow door.
+Behind you is the wooden door where you came in.
+""")
     choose_door()
 
 def inventory():
     print("You are currently carrying:")
-    for x in game_dict.inventory:
+    for x in game_items.inventory:
         print(x)
     choose_door()
 
@@ -170,9 +165,12 @@ def choose_door():
         choose_door()
 
 def end_adventure():
-    print("You go back out through the creaking wooden door and stand blinking in the sunlight.")
-    print("Your adventure is over, for now.")
-    print("The end.\nThanks for playing!")
+    print("""
+You go back out through the creaking wooden door and stand blinking in the sunlight.
+Your adventure is over, for now.\n
+The end.
+Thanks for playing!
+          """)
     exit(0)
 
 def end_adventure_dead(why):
@@ -193,5 +191,10 @@ def get_player_name():
         print(f"Very funny, {alt_name}. Let's go.")
         name = alt_name
 
+def main():
+    os.system("clear")
+    player_name =  get_player_name()
+
 if __name__ == '__main__':
     main()
+    start_adventure()
