@@ -1,14 +1,14 @@
 # list of items in the treasure chest
-treasure = (
+treasure = [
     '[G]old coins',
     'A silver [C]up',
     'A diamond [R]ing',
     'A steel [S]word'
-)
+]
 # user inventory list
-inventory = {
+inventory = [
     'A flashlight'
-}
+]
 
 # treasure list expressed as a dict
 treasure_list = [
